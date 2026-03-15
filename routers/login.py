@@ -19,7 +19,7 @@ def login(credentials: OAuth2PasswordRequestForm = Depends(), db:Session = Depen
         raise HTTPException(status_code=401, detail="Invalid email")
     
     #if pswrd didnt match
-    if not verify_pass:
+    if not verify_pass(credentials.password, db_user.password):
         raise HTTPException(status_code=401, detail="Invalid password")
     
     # if right, give em tokens
